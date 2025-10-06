@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BQ → DBX SQL Converter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f9fafb;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .card {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 6px;
+        }
+        input, select, button, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+        button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #1d4ed8;
+        }
+        .secondary {
+            background: #e5e7eb;
+            color: #111;
+        }
+        .result {
+            background: #f3f4f6;
+            padding: 12px;
+            border-radius: 6px;
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 14px;
+        }
+        .error {
+            color: #dc2626;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>BigQuery → Databricks SQL Converter</h1>
+    <div class="card">
+        <!-- FIX: point form to /convert, not /upload -->
+        <form action="/convert" method="post" enctype="multipart/form-data">
+            <label for="file">Upload BigQuery SQL File:</label>
+            <input type="file" name="file" id="file" required>
+
+            <label for="mode">Select Conversion Mode:</label>
+            <select name="mode" id="mode">
+                <option value="sql">Databricks SQL</option>
+                <option value="pyspark">PySpark</option>
+                <option value="python">Python</option>
+            </select>
+
+            <button type="submit">Convert</button>
+            <button type="reset" class="secondary">Clear</button>
+        </form>
+
+        {% if converted_query %}
+            <h3>Converted Query:</h3>
+            <div class="result">{{ converted_query }}</div>
+        {% endif %}
+
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+    </div>
+</body>
+</html>
